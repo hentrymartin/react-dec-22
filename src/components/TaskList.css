@@ -1,0 +1,14 @@
+.task-list-wrapper {
+  display: flex;
+  width: 500px;
+  margin: 0 auto;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.task-list-wrapper .task-list-wrapper__item {
+  padding: 10px;
+  border: 1px solid gray;
+  text-align: center;
+  margin-bottom: 5px;
+}

@@ -1,0 +1,23 @@
+.button-wrapper {
+  margin: 0 10px;
+}
+
+.button-wrapper button {
+  padding: 4px 8px;
+  background: transparent;
+  border-radius: 2px;
+  min-height: 20px;
+  color: white;
+}
+
+.button-wrapper .green {
+  background: green;
+}
+
+.button-wrapper .red {
+  background: red;
+}
+
+.button-wrapper .orange {
+  background: orange;
+}

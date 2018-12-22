@@ -1,0 +1,16 @@
+.input-wrapper {
+  margin: 0 10px;
+}
+
+.input-wrapper input {
+  border-radius: 2px;
+  border: 1px solid #cec5c5;
+  min-height: 20px;
+  outline: none;
+  padding-left: 10px;
+}
+
+.input-wrapper .input-wrapper__error-message {
+  color: red;
+  font-size: 12px;
+}
