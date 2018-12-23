@@ -7,94 +7,66 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      taskName: '',
       tasks: [],
-      isError: false,
     };
-
-    this.taskInput = null;
   }
 
-  componentDidMount() {
-    this.focusTextField();
-  }
-
-  onTaskTextChange = value => {
+  onAddTask = taskName => {
+    const { tasks } = this.state;
+    const task = {
+      name: taskName,
+      status: 'TODO',
+    };
     this.setState({
-      taskName: value,
-      isError: false,
+      tasks: [...tasks, task],
+      // tasks: tasks.concat([taskName]),
     });
   };
 
-  onResetText = () => {
-    this.setState(
-      {
-        taskName: '',
-      },
-      () => {
-        this.focusTextField();
-      },
-    );
+  onResetAll = () => {
+    this.setState({
+      tasks: [],
+    });
   };
 
-  onAddTask = () => {
-    const { taskName, tasks } = this.state;
+  onRemoveTask = index => {
+    const tasksCopy = [...this.state.tasks];
 
-    if (!taskName) {
-      this.setState({
-        isError: true,
-      });
-      return;
+    tasksCopy.splice(index, 1);
+
+    this.setState({
+      tasks: tasksCopy,
+    });
+  };
+
+  onStatusChange = (task, index) => {
+    if (task.status === 'TODO') {
+      task.status = 'IN_PROGRESS';
+    } else if (task.status === 'IN_PROGRESS') {
+      task.status = 'COMPLETED';
     }
 
-    this.setState(
-      {
-        taskName: '',
-        tasks: [...tasks, taskName],
-        // tasks: tasks.concat([taskName]),
-        isError: false,
-      },
-      () => {
-        this.focusTextField();
-      },
-    );
-  };
+    const { tasks } = this.state;
 
-  onResetAll = () => {
-    this.setState(
-      {
-        tasks: [],
-      },
-      () => {
-        this.focusTextField();
-      },
-    );
-  };
+    this.setState({
+      tasks: tasks.map((item, innerIndex) => {
+        if (index === innerIndex) {
+          return task;
+        }
 
-  focusTextField = () => {
-    if (this.taskInput) this.taskInput.focus();
-  };
-
-  onInputLoaded = taskInput => {
-    this.taskInput = taskInput;
+        return item;
+      }),
+    });
   };
 
   render() {
     return (
       <div className="app">
         {/* This is the form to add the item */}
-        <TaskForm
-          taskName={this.state.taskName}
-          onInputLoaded={this.onInputLoaded}
-          onResetAll={this.onResetAll}
-          onResetText={this.onResetText}
-          onAddTask={this.onAddTask}
-          onTaskTextChange={this.onTaskTextChange}
-          isError={this.state.isError}
-        />
+        <TaskForm onResetAll={this.onResetAll} onAddTask={this.onAddTask} />
 
         {/* This renders the tasks list */}
-        <TaskList tasks={this.state.tasks} />
+        <TaskList tasks={this.state.tasks} onRemoveTask={this.onRemoveTask} onStatusChange={this.onStatusChange} />
       </div>
     );
   }
